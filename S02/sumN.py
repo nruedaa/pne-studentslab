@@ -6,4 +6,4 @@ def sumn(n):
 
 
 print("Sum of the 20 first integers: ", sumn(20))
-print("SUm of the 100, first integers: ", sumn(100))
+print("Sum of the 100, first integers: ", sumn(100))
