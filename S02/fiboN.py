@@ -1,4 +1,3 @@
-
 terms = int(input("Number of terms:"))
 terms_list = [0]
 variable1 = 0
