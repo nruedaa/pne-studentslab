@@ -27,3 +27,4 @@ n = int(input("Number of terms:"))
 terms_list = fibonacci(n)
 summatory = fibosum(n, terms_list)
 print("Sum of the First 10 terms of the Fibonacci series:", summatory)
+
