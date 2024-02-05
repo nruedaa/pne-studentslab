@@ -12,3 +12,4 @@ while terms > 0:
 print("5th fibonacci term: ", terms_list[5])
 print("10th fibonacci term: ", terms_list[10])
 print("15th fibonacci term: ", terms_list[15])
+
