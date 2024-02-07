@@ -1,0 +1,4 @@
+There's a bug in line 8 when executing result 2.
+The reason why this happens is because the result of t1 is zero
+and the following operation is a division by t1.
+This leads to a ZeroDivisionError.
