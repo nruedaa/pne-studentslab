@@ -19,6 +19,6 @@ def seq_count(filename):
     bases_dictionary = {"A:", 0, "T:", 0, "C:", 0, "G:", 0}
     for i in body:
         bases_dictionary[i] += 1
-print(seq_count(""))
+
 
 
