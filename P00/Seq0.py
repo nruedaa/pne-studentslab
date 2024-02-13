@@ -7,15 +7,13 @@ def seq_read_fasta(filename):
     body = Path(filename).read_text()[first_line:]
     body = body.replace("\n", "")
     return body
-def seq_len(filename):
-    body = seq_read_fasta(filename)
-    return len(body)
-def seq_count_base(filename, base):
-    body = seq_read_fasta(filename)
+def seq_len(body):
+    length = len(body)
+    return length
+def seq_count_base(body, base):
     count_base = body.count(base)
     return count_base
-def seq_count(filename):
-    body = seq_read_fasta(filename)
+def seq_count(body):
     bases_dictionary = {"A": 0,
                         "C": 0,
                         "G": 0,
@@ -24,16 +22,14 @@ def seq_count(filename):
       if i in bases_dictionary:
           bases_dictionary[i] += 1
     return bases_dictionary
-def seq_reverse(filename, n):
-    body = seq_read_fasta(filename)
+def seq_reverse(body, n):
     fragment = body[0:n]
     reverse = ""
     for i in reversed(fragment):
         reverse += i
     return fragment, reverse
 
-def seq_complement(filename, n):
-    body = seq_read_fasta(filename)
+def seq_complement(body, n):
     fragment = body[0:n]
     complement = ""
     for i in fragment:
@@ -46,3 +42,4 @@ def seq_complement(filename, n):
         elif i == "G":
             complement += "C"
     return fragment, complement
+
