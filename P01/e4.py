@@ -1,5 +1,5 @@
 from Seq1 import Seq
-print("-----| Practice 1, Exercise 3 |-----")
+print("-----| Practice 1, Exercise 4 |-----")
 null_sequence = Seq()
 valid_sequence = Seq("ACTGA")
 invalid_sequence = Seq("Invalid sequence")

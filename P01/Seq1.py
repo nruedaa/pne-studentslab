@@ -7,11 +7,17 @@ class Seq:
         else:
             for i in strbases:
                 if i not in correct_bases:
-                    self.strbases = "ERROR"
-                    print("INVALID sequence!")
+                    result = False
                 else:
-                    print("New sequence created!")
-                    self.strbases = strbases
+                    result = True
+            if result:
+                print("New sequence created!")
+                self.strbases = strbases
+            else:
+                self.strbases = "ERROR"
+                print("INVALID sequence!")
+
+
     def __str__(self):
         return self.strbases
     def len(self):
@@ -22,3 +28,63 @@ class Seq:
             length = len(self.strbases)
         return length
 
+    def seq_count_base(self, base):
+        if self.strbases == "NULL"or self.strbases == "ERROR":
+            count_base = 0
+        else:
+            for i in self.strbases:
+                if i == base:
+                    count_base = self.strbases.count(base)
+        return count_base
+
+    def seq_count(self):
+        bases_dictionary = {"A": 0,
+                            "C": 0,
+                            "G": 0,
+                            "T": 0}
+        if self.strbases == "NULL" or self.strbases == "ERROR":
+            bases_dictionary = {"A": 0,
+                                "C": 0,
+                                "G": 0,
+                                "T": 0}
+        else:
+            for i in self.strbases:
+                if i in bases_dictionary:
+                    bases_dictionary[i] += 1
+        return bases_dictionary
+
+    def seq_reverse(self):
+        reverse = ""
+        if self.strbases == "NULL":
+            reverse = "NULL"
+        elif self.strbases == "ERROR":
+            reverse = "ERROR"
+        else:
+            for i in reversed(self.strbases):
+                reverse += i
+        return reverse
+
+    def seq_complement(self):
+        complement = ""
+        if self.strbases == "NULL":
+            complement = "NULL"
+        elif self.strbases == "ERROR":
+            complement = "ERROR"
+        else:
+            for i in self.strbases:
+                if i == "A":
+                    complement += "T"
+                elif i == "T":
+                    complement += "A"
+                elif i == "C":
+                    complement += "G"
+                elif i == "G":
+                    complement += "C"
+        return complement
+
+    def seq_read_fasta(self, filename):
+        from pathlib import Path
+        first_line = Path(filename).read_text().find("\n")
+        body = Path(filename).read_text()[first_line:]
+        body = body.replace("\n", "")
+        return body
