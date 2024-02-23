@@ -43,3 +43,19 @@ def seq_complement(body, n):
             complement += "C"
     return fragment, complement
 
+def most_frequent(body):
+    a = body.count("A")
+    c = body.count("C")
+    g = body.count("G")
+    t = body.count("T")
+    max_base = max(a, c, g, t)
+    if max_base == a:
+        freq = "A"
+    elif max_base == c:
+        freq = "C"
+    elif max_base == g:
+        freq = "G"
+    elif max_base == t:
+        freq = "T"
+    return freq
+

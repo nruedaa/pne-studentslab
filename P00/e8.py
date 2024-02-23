@@ -7,6 +7,4 @@ for i in genes_list:
     body = seq_read_fasta(folder + i)
     for j in bases_list:
         count_bases.append(seq_count_base(body, j))
-    for b in count_bases:
-        most_frequent = max(count_bases)
-    print("Gene", i.replace(".txt", ""), ": Most frequent Base:", most_frequent)
+    print("Gene", i.replace(".txt", ""), ": Most frequent Base:", most_frequent(body))
