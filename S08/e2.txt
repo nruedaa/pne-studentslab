@@ -1,0 +1,8 @@
+  DESTINATION IP |    NAME (IF KNOWN)   |  TIMES  |
+  212.128.255.104         Self             0.073
+  212.128.255.65       f-l3208-pc01         0.614
+      8.8.8.8            Google             4.71
+  212.128.240.50        www.urjc.es         3.32
+  140.82.121.4          github.com          36.9
+  185.15.58.224         wikipedia.org       18.6
+  203.209.197.14       newdomain.com.au
