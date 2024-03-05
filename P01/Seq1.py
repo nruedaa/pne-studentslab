@@ -1,6 +1,7 @@
 class Seq:
     def __init__(self, strbases = None):
         correct_bases = ["A", "C", "G", "T"]
+        result = True
         if strbases == None:
             print("NULL sequence created")
             self.strbases = "NULL"
@@ -8,8 +9,6 @@ class Seq:
             for i in strbases:
                 if i not in correct_bases:
                     result = False
-                else:
-                    result = True
             if result:
                 print("New sequence created!")
                 self.strbases = strbases
@@ -87,6 +86,7 @@ class Seq:
         first_line = Path(filename).read_text().find("\n")
         body = Path(filename).read_text()[first_line:]
         body = body.replace("\n", "")
+        self.strbases = body
         return body
 
     def most_frequent(self):
