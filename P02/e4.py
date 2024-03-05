@@ -5,12 +5,12 @@ folder = "../sequences/"
 PRACTICE = 2
 EXERCISE = 4
 # -- Parameters of the server to talk to
-IP = "212.128.255.104"  # your IP address
+IP = "212.128.255.98"  # your IP address
 PORT = 8081
 def get_file(gene):
     return folder + gene
 def req_response_from_server(client, msg):
-    print("To server: {}".format(msg), sep= "")
+    print("To server: {}".format(msg), sep="")
     response = client.talk(msg)
     print(f"From Server: {response}")
 print(f"-----| Practice {PRACTICE}, Exercise {EXERCISE} |------")
