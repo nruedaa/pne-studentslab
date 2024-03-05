@@ -1,24 +1,46 @@
 import socket
 
-# SERVER IP, PORT
+# Configure the Server's IP and PORT
 PORT = 8081
-IP = "212.128.255.64"  #it depends on the machine the server is running
+IP = "212.128.255.24" # it depends on the machine the server is running
+MAX_OPEN_REQUESTS = 5
 
-# First, create the socket
-# We will always use these parameters: AF_INET y SOCK_STREAM
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# Counting the number of connections
+number_con = 0
 
-# establish the connection to the Server (IP, PORT)
-s.connect((IP, PORT))
+# create an INET, STREAMing socket
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+try:
+    serversocket.bind((IP, PORT))
+    # become a server socket
+    # MAX_OPEN_REQUESTS connect requests before refusing outside connections
+    serversocket.listen(MAX_OPEN_REQUESTS)
 
-# Send data. No strings can be sent, only bytes
-# It necessary to encode the string into bytes
-s.send(str.encode("HELLO FROM THE CLIENT!!!"))
+    while True:
+        # accept connections from outside
+        print("Waiting for connections at {}, {} ".format(IP, PORT))
+        (clientsocket, address) = serversocket.accept()
 
-# Receive data from the server
-msg = s.recv(2048)
-print("MESSAGE FROM THE SERVER:\n")
-print(msg.decode("utf-8"))
+        # Another connection!e
+        number_con += 1
 
-# Closing the socket
-s.close()
+        # Print the connection number
+        print("CONNECTION: {}. From the IP: {}".format(number_con, address))
+
+        # Read the message from the client, if any
+        msg = clientsocket.recv(2048).decode("utf-8")
+        print("Message from client: {}".format(msg))
+
+        # Send the message
+        message = "Hello from the teacher's server\n"
+        send_bytes = str.encode(message)
+        # We must write bytes, not a string
+        clientsocket.send(send_bytes)
+        clientsocket.close()
+
+except socket.error:
+    print("Problems using ip {} port {}. Is the IP correct? Do you have port permission?".format(IP, PORT))
+
+except KeyboardInterrupt:
+    print("Server stopped by the user")
+    serversocket.close()
