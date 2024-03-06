@@ -2,7 +2,7 @@ from Seq0 import *
 
 seq1 = "ATTCCCGGGG"
 
-print(f"Seq:    {seq1}")
+print(f"Seq: {seq1}")
 print(f"  Rev : {seq_reverse(seq1, None)}")
 print(f"  Comp: {seq_complement(seq1, None)}")
 print(f"  Length: {seq_len(seq1)}")

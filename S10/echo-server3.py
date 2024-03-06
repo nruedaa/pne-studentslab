@@ -2,8 +2,8 @@ import socket
 import termcolor
 
 # Configure the Server's IP and PORT
-PORT = 8082
-IP = "212.128.255.139" # the IP address depends on the machine running the server
+PORT = 8080
+IP = "127.0.0.1" # the IP address depends on the machine running the server
 
 # -- Step 1: create the socket
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -25,7 +25,7 @@ while n <= 5:
     client_list.append(f"{address}")
     n += 1
     msg = rs.recv(2048).decode("utf-8")
-    print(f"Message received: " + termcolor.colored(msg,"green")) #esto es para que se imprima en verde por separado
+    print(f"Message received: " + termcolor.colored(msg, "green"))   #esto es para que se imprima en verde por separado
     newMsg = "ECHO " + msg
     rs.send(newMsg.encode())
     rs.close()
