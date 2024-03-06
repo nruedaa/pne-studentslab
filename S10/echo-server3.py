@@ -1,10 +1,8 @@
 import socket
-import termcolor
-
 
 # Configure the Server's IP and PORT
 PORT = 8080
-IP = "212.128.255.89" # the IP address depends on the machine running the server
+IP = "192.168.1.198" # the IP address depends on the machine running the server
 
 # -- Step 1: create the socket
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,24 +24,16 @@ while n <= 5:
     client_list.append(f"{address}")
     n += 1
     msg = rs.recv(2048).decode("utf-8")
-    print(f"Message received: " + termcolor.colored(msg,"green")) #esto es para que se imprima en verde por separado
+    print(f"Message received: " + msg) #esto es para que se imprima en verde por separado
     newMsg = "ECHO " + msg
     rs.send(newMsg.encode())
     rs.close()
-clients_dic = {"Client 0:": "",
-               "Client 1:": "",
-               "Client 2:": "",
-               "Client 3:": "",
-               "Client 4:": "",
-               }
-for i in client_list:
-    print(i)
-    clients_dic["Client 0:"] += i[0]
-    clients_dic["Client 1:"] += i[1]
-    clients_dic["Client 2:"] += i[2]
-    clients_dic["Client 3:"] += i[3]
-    clients_dic["Client 4:"] += i[4]
 
-print("The following clients have connected to the server:", "\n", clients_dic)
+print("The following clients have connected to the server:")
+number_client = 1
+for i in client_list:
+    print("Client", number_client, ":", i)
+    number_client += 1
+
 # -- Close the socket
 ls.close()
