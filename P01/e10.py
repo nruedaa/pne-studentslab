@@ -1,5 +1,5 @@
 from Seq1 import Seq
-print("-----| Practice 1, Exercise 9 |-----")
+print("-----| Practice 1, Exercise 10 |-----")
 folder = "../sequences/"
 genes_list = ["U5.txt", "ADA.txt", "FRAT1.txt", "FXN.txt", "RNU6_269P.txt"]
 bases_list = ["A", "C", "T", "G"]

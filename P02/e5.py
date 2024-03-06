@@ -4,8 +4,8 @@ from Client0 import Client
 PRACTICE = 2
 EXERCISE = 5
 # -- Parameters of the server to talk to
-IP = "212.128.255.24"  # your IP address
-PORT = 8081
+IP = "212.128.255.139"  # your IP address
+PORT = 8080
 
 def req_response_from_server(client, msg):
     print("Gene FRAT1: {}".format(msg), sep="")
