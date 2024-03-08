@@ -5,8 +5,8 @@ folder = "../sequences/"
 PRACTICE = 2
 EXERCISE = 4
 # -- Parameters of the server to talk to
-IP = "212.128.255.139"  # your IP address
-PORT = 8080
+IP = "172.20.10.3"  # your IP address
+PORT = 8081
 def get_file(gene):
     return folder + gene
 def req_response_from_server(client, msg):

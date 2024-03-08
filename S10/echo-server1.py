@@ -3,8 +3,8 @@ import termcolor
 
 
 # Configure the Server's IP and PORT
-PORT = 8080
-IP = "127.0.0.1" # the IP address depends on the machine running the server
+PORT = 8084
+IP = "192.168.1.198" # the IP address depends on the machine running the server
 
 # -- Step 1: create the socket
 ls = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -1,17 +1,17 @@
 class Seq:
     def __init__(self, strbases = None):
+        self.strbases = strbases
         correct_bases = ["A", "C", "G", "T"]
         result = True
-        if strbases == None:
+        if self.strbases == None:
             print("NULL sequence created")
             self.strbases = "NULL"
         else:
-            for i in strbases:
+            for i in self.strbases:
                 if i not in correct_bases:
                     result = False
             if result:
                 print("New sequence created!")
-                self.strbases = strbases
             else:
                 self.strbases = "ERROR"
                 print("INVALID sequence!")
