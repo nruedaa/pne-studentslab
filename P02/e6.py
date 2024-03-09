@@ -44,5 +44,3 @@ for i, f in enumerate(list[0:10]):
         message = f"Fragment {i + 1}: {list[i]}"
         req_response_from_server(c1, message)
 
-
-
