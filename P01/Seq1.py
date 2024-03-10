@@ -28,7 +28,7 @@ class Seq:
         return length
 
     def seq_count_base(self, base):
-        if self.strbases == "NULL"or self.strbases == "ERROR":
+        if self.strbases == "NULL" or self.strbases == "ERROR":
             count_base = 0
         else:
             for i in self.strbases:
