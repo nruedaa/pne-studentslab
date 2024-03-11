@@ -3,7 +3,7 @@ import termcolor
 from Seq1 import Seq
 class Server:
     def __init__(self):
-        PORT = 8082
+        PORT = 8080
         IP = "127.0.0.1"
         MAX_OPEN_REQUESTS = 5
         number_con = 5
@@ -54,18 +54,23 @@ class Server:
         termcolor.cprint("GET", "green")
         list_sequences = ["AAAACCCCGGGGTTTT", "CCCCGGGGTTTTAAAA", "ACGTACGTACGTACGTACGTACGT", "GTGTGTCACACAGTGTGTCACA", "AAACAAATAAAGGGGCGGGTGGGA"]
         user_sequence = list_sequences[int(n)]
-        print(user_sequence)
-        return user_sequence
+        print(user_sequence + "\n")
+        return user_sequence + "\n"
 
     def info_response(self, msg):
+        sequence = ""
+        for i in msg:
+            if i in "ACGT":
+                sequence += i
         termcolor.cprint("INFO", "green")
-        s = Seq(msg)
+        s = Seq(sequence)
         bases_list = ["A", "C", "T", "G"]
-        print(" Sequence:", s, "\n", "Total Length:", s.len())
+        result = f"Sequence {s}\nTotal Length: {s.len()}\n"
         for j in bases_list:
-            average = (round(msg.count(j) / s.len() * 100, 2))
-            print(j, ":", s.seq_count_base(j), "(", average, "% )")
-        return " Sequence:", s, "\n", "Total Length:", s.len()
+            average = (round(s.seq_count_base(j) / s.len() * 100, 2))
+            result += f"{j}: {s.seq_count_base(j)}  ({average}%)\n"
+        print(result)
+        return result
 
     def complement_response(self, msg):
         sequence = ""
@@ -76,8 +81,8 @@ class Server:
         termcolor.cprint("COMP", "green")
         s = Seq(sequence)
         comp_seq = s.seq_complement()
-        print(comp_seq)
-        return comp_seq
+        print(comp_seq + "\n")
+        return comp_seq + "\n"
 
     def reverse_response(self, msg):
         sequence = ""
@@ -87,16 +92,16 @@ class Server:
         termcolor.cprint("REV", "green")
         s = Seq(sequence)
         rev_seq = s.seq_reverse()
-        print(rev_seq)
-        return rev_seq
+        print(rev_seq + "\n")
+        return rev_seq + "\n"
 
     def gene_response(self, msg):
-        gene = msg.strip("GENE ")
+        gene = msg.lstrip("GENE ")
         termcolor.cprint("GENE", "green")
         filename = "../sequences/" + gene + ".txt"
         s = Seq()
         sequence = s.seq_read_fasta(filename)
-        print(sequence)
-        return sequence
+        print(sequence + "\n")
+        return sequence + "\n"
 
 c = Server()
