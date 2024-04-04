@@ -6,19 +6,6 @@ from pathlib import Path
 IP = "127.0.0.1"
 PORT = 8080
 
-def find_req_line(webline):
-    if "/info/A" in webline:
-        file = Path("./html/info/A.html").read_text()
-    elif "/info/C" in webline:
-        file = Path("./html/info/C.html").read_text()
-    elif "/info/G" in webline:
-        file = Path("./html/info/G.html").read_text()
-    elif "/info/T" in webline:
-        file = Path("./html/info/T.html").read_text()
-    else:
-        file = Path("./html/info/error.html").read_text()
-    return file
-
 def process_client(s):
     # -- Receive the request message
     req_raw = s.recv(2000)
@@ -43,7 +30,7 @@ def process_client(s):
     # Body (content to send)
 
     # This new contents are written in HTML language
-    body = find_req_line(req_line)
+    body = Path("./html/info/A.html").read_text()
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 
@@ -72,7 +59,6 @@ ls.bind((IP, PORT))
 # -- Become a listening socket
 ls.listen()
 
-print("Green server configured!")
 
 # --- MAIN LOOP
 while True:
