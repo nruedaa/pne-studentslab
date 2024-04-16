@@ -6,6 +6,15 @@ from pathlib import Path
 IP = "127.0.0.1"
 PORT = 8080
 
+def find_req_line(webline):
+    if "/info/A" in webline:
+        file = Path("./html/info/A.html").read_text()
+    elif "/info/C" in webline:
+        file = Path("./html/info/C.html").read_text()
+    else:
+        file = ""
+    return file
+
 def process_client(s):
     # -- Receive the request message
     req_raw = s.recv(2000)
@@ -30,7 +39,7 @@ def process_client(s):
     # Body (content to send)
 
     # This new contents are written in HTML language
-    body = Path("./html/info/C.html").read_text()
+    body = find_req_line(req_line)
     # -- Status line: We respond that everything is ok (200 code)
     status_line = "HTTP/1.1 200 OK\n"
 

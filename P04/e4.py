@@ -16,8 +16,9 @@ def find_req_line(webline):
     elif "/info/T" in webline:
         file = Path("./html/info/T.html").read_text()
     else:
-        file = Path("./html/info/error.html").read_text()
+        file = ""
     return file
+
 def process_client(s):
     # -- Receive the request message
     req_raw = s.recv(2000)

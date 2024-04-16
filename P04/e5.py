@@ -7,13 +7,13 @@ IP = "127.0.0.1"
 PORT = 8080
 
 def find_req_line(webline):
-    if "/info/A" in webline:
+    if "GET /info/A" in webline:
         file = Path("./html/info/A.html").read_text()
-    elif "/info/C" in webline:
+    elif "GET /info/C" in webline:
         file = Path("./html/info/C.html").read_text()
-    elif "/info/G" in webline:
+    elif "GET /info/G" in webline:
         file = Path("./html/info/G.html").read_text()
-    elif "/info/T" in webline:
+    elif "GET /info/T" in webline:
         file = Path("./html/info/T.html").read_text()
     else:
         file = Path("./html/info/error.html").read_text()
@@ -89,4 +89,3 @@ while True:
 
         # -- Close the socket
         cs.close()
-
