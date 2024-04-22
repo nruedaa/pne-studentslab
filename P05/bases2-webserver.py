@@ -1,16 +1,9 @@
 import http.server
 import socketserver
-import termcolor
-
-# Define the Server's port
+from pathlib import Path
+# -- Server network parameters
 PORT = 8080
-
-# -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
-
-
-# Class with our Handler. It is a called derived from BaseHTTPRequestHandler
-# It means that our class inherits all his methods and properties
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -18,14 +11,26 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         in the HTTP protocol request"""
         # Generating the response message
         if self.path == "/":
-            contents = "Welcome to my server"
-            self.send_response(200)  # -- Status line: OK!
+            contents = Path("./html/index.html").read_text()
+            self.send_response(200)
+        elif self.path == "/info/A":
+            contents = Path("./html/info/A.html").read_text()
+            self.send_response(200)
+        elif self.path == "/info/C":
+            contents = Path("./html/info/C.html").read_text()
+            self.send_response(200)
+        elif self.path == "/info/G":
+            contents = Path("./html/info/G.html").read_text()
+            self.send_response(200)
+        elif self.path == "/info/T":
+            contents = Path("./html/info/T.html").read_text()
+            self.send_response(200)
         else:
-            contents = "Resource not available"
+            contents = Path("./html/error.html").read_text()
             self.send_response(404)
 
         # Define the content-type header:
-        self.send_header('Content-Type', 'text/plain')
+        self.send_header('Content-Type', 'text/html')
         self.send_header('Content-Length', len(contents.encode()))
 
         # The header is finished
