@@ -25,31 +25,37 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         # Open the form1.html file
         # Read the index from the file
         if self.path == "/" or self.path.startswith("/echo"):
-            contents = Path('./html/form-e1.html').read_text()
+            contents = Path('./html/form-e2.html').read_text()
             # Generating the response message
             self.send_response(200)  # -- Status line: OK!
             url_path = urlparse(self.path)
             path = url_path.path
             arguments = parse_qs(url_path.query)
             message = arguments.get("msg", [""])[0]
+            check = arguments.get("chk", [""])[0]
             if message:
+                if check:
+                    message = message.upper()
+                else:
+                    message = message.lower()
                 contents = f"""
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="utf-8">
-                    <title>Response</title>
-                </head>
-                <body>
-                    <h1>Received Message:</h1>
-                    <p>{message}</p>
-                    <a href="/">Main Page</a>
-                </body>
-                </html>
-                """
+                                                <!DOCTYPE html>
+                                                <html lang="en">
+                                                <head>
+                                                    <meta charset="utf-8">
+                                                    <title>Response</title>
+                                                </head>
+                                                <body>
+                                                    <h1>Echoing the received message:</h1>
+                                                    <p>{message}</p>
+                                                    <a href="/">Main Page</a>
+                                                </body>
+                                                </html>
+                                                """
                 self.send_response(200)
+
             else:
-                contents = Path("./html/form-1.html").read_text()
+                contents = Path("./html/form-e2.html").read_text()
                 self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
