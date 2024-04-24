@@ -4,13 +4,13 @@ import termcolor
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 import jinja2 as j
+
 # Define the Server's port
 PORT = 8080
 def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
     contents = j.Template(contents)
     return contents
-
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
@@ -21,28 +21,15 @@ socketserver.TCPServer.allow_reuse_address = True
 class TestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
-        """This method is called whenever the client invokes the GET method
-        in the HTTP protocol request"""
-
-        # Print the request line
         termcolor.cprint(self.requestline, 'green')
-
-        # Open the form1.html file
-        # Read the index from the file
         if self.path == "/" or self.path.startswith("/echo"):
-            contents = Path('./html/form-e1.html').read_text()
-            # Generating the response message
+            contents = Path('./html/index.html').read_text()
             self.send_response(200)  # -- Status line: OK!
             url_path = urlparse(self.path)
             path = url_path.path
             arguments = parse_qs(url_path.query)
-            message = arguments.get("msg", [""])[0]
-            if message:
-                contents = read_html_file("response1.html").render(
-                    context={"message": message})  # provide a dictionary to build the form
-                self.send_response(200)
-            else:
-                contents = Path("./html/form-e1.html").read_text()
+            if path == "/ping":
+                contents = Path('./html/ping.html').read_text()
                 self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()

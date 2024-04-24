@@ -3,9 +3,14 @@ import socketserver
 import termcolor
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+import jinja2 as j
+
 # Define the Server's port
 PORT = 8080
-
+def read_html_file(filename):
+    contents = Path("html/" + filename).read_text()
+    contents = j.Template(contents)
+    return contents
 
 # -- This is for preventing the error: "Port already in use"
 socketserver.TCPServer.allow_reuse_address = True
@@ -38,20 +43,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     message = message.upper()
                 else:
                     message = message.lower()
-                contents = f"""
-                                                <!DOCTYPE html>
-                                                <html lang="en">
-                                                <head>
-                                                    <meta charset="utf-8">
-                                                    <title>Response</title>
-                                                </head>
-                                                <body>
-                                                    <h1>Echoing the received message:</h1>
-                                                    <p>{message}</p>
-                                                    <a href="/">Main Page</a>
-                                                </body>
-                                                </html>
-                                                """
+                contents = read_html_file("response2.html").render(
+                    context={"message": message})
                 self.send_response(200)
 
             else:
