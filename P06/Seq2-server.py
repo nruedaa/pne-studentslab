@@ -19,8 +19,26 @@ def seq_read_fasta(filename):
     from pathlib import Path
     first_line = Path(filename).read_text().find("\n")
     body = Path(filename).read_text()[first_line:]
-    body = body.replace("\n", "")
     return body
+
+def seq_reverse(body):
+    reverse = ""
+    for i in reversed(body):
+        reverse += i
+    return reverse
+
+def seq_complement(body):
+    complement = ""
+    for i in body:
+        if i == "A":
+            complement += "T"
+        elif i == "T":
+            complement += "A"
+        elif i == "C":
+            complement += "G"
+        elif i == "G":
+            complement += "C"
+    return complement
 
 socketserver.TCPServer.allow_reuse_address = True
 
@@ -38,17 +56,29 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = Path('./html/ping.html').read_text()
             self.send_response(200)
         elif path == "/get":
-            number = arguments.get("sequence", [""])[0]
+            number = arguments.get("number", [""])[0]
             sequence = get_response(number)
             contents = read_html_file("get.html").render(
                 context={"number": number, "sequence": sequence})
             self.send_response(200)
         elif path == "/gene":
             gene = arguments.get("gene", [""])[0]
-            if gene:
-                gene_seq = seq_read_fasta("../sequences/" + gene + ".txt")
-                contents = read_html_file("get.html").render(
-                    context={"gene": gene, "sequence": gene_seq})
+            gene_seq = seq_read_fasta("../sequences/" + gene + ".txt")
+            contents = read_html_file("gene.html").render(
+                context={"gene": gene, "gene_seq": gene_seq})
+            self.send_response(200)
+        elif path == "/operation":
+            introduced_seq = arguments.get("msg", [""])[0].upper()
+            operation = arguments.get("op", [""])[0]
+            if operation == "Rev":
+                seq_reversed = seq_reverse(introduced_seq)
+                contents = read_html_file("operation.html").render(
+                    context={"introduced_seq": introduced_seq, "operation": operation, "result": seq_reversed})
+                self.send_response(200)
+            elif operation == "Comp":
+                complement = seq_complement(introduced_seq)
+                contents = read_html_file("operation.html").render(
+                    context={"introduced_seq": introduced_seq, "operation": operation, "result": complement})
                 self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
@@ -61,6 +91,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
 
         # The header is finished
         self.end_headers()
+        print("intro seq:", contents)
 
         # Send the response message
         self.wfile.write(str.encode(contents))
