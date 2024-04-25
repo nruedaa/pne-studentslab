@@ -1,0 +1,21 @@
+{
+    "People": [{"Firstname": "Troll",
+    "Lastname": "Face",
+    "age": 20,
+    "phoneNumber": [
+      {"number": "1111", "type": "home"},
+      {"number": "333", "type" : "office"}
+    ]}, {"Firstname": "Natalia",
+    "Lastname": "Rueda",
+    "age": 19,
+    "phoneNumber": [
+      {"number": "1234", "type": "home"},
+      {"number": "5678", "type" : "office"}
+    ]}, {"Firstname": "Laura",
+    "Lastname": "Martinez",
+    "age": 21,
+    "phoneNumber": [
+      {"number": "3210", "type": "home"},
+      {"number": "9876", "type" : "office"}
+    ]} ]
+}

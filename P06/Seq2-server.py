@@ -40,6 +40,18 @@ def seq_complement(body):
             complement += "C"
     return complement
 
+def info_seq(body):
+    sequence = ""
+    for i in body:
+        if i in "ACGT":
+            sequence += i
+        bases_list = ["A", "C", "T", "G"]
+        result = f"Sequence {body}\nTotal Length: {len(body)}\n"
+        for j in bases_list:
+            average = (round(body.count(j) / len(body) * 100, 2))
+            result += f"{j}: {body.count(j)}  ({average}%)\n"
+        print(result)
+        return result
 socketserver.TCPServer.allow_reuse_address = True
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -79,6 +91,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 complement = seq_complement(introduced_seq)
                 contents = read_html_file("operation.html").render(
                     context={"introduced_seq": introduced_seq, "operation": operation, "result": complement})
+                self.send_response(200)
+            elif operation == "Info":
+                info = info_seq(introduced_seq)
+                contents = read_html_file("operation.html").render(
+                    context={"introduced_seq": introduced_seq, "operation": operation, "result": info})
                 self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
