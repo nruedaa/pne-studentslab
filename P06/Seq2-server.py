@@ -22,11 +22,6 @@ def seq_read_fasta(filename):
     body = body.replace("\n", "")
     return body
 
-sequence_1 = seq_read_fasta("../sequences/U5.txt")
-sequence_2 = seq_read_fasta("../sequences/ADA.txt")
-sequence_3 = seq_read_fasta("../sequences/FRAT1.txt")
-sequence_4 = seq_read_fasta("../sequences/FXN.txt")
-
 socketserver.TCPServer.allow_reuse_address = True
 
 class TestHandler(http.server.BaseHTTPRequestHandler):
@@ -48,6 +43,13 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             contents = read_html_file("get.html").render(
                 context={"number": number, "sequence": sequence})
             self.send_response(200)
+        elif path == "/gene":
+            gene = arguments.get("gene", [""])[0]
+            if gene:
+                gene_seq = seq_read_fasta("../sequences/" + gene + ".txt")
+                contents = read_html_file("get.html").render(
+                    context={"gene": gene, "sequence": gene_seq})
+                self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
             # Generating the response message
