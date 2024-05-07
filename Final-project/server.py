@@ -14,12 +14,12 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         arguments = parse_qs(url_path.query)
         termcolor.cprint(self.requestline, 'green')
         if path == "/" or path.startswith("/echo"):
-            contents = Path('./Final-project/index.html').read_text()
+            contents = Path('./html/index.html').read_text()
             self.send_response(200)
         elif path == "/ping":
             pass
         else:
-            contents = Path('./Final-project/error.html').read_text()
+            contents = Path('./html/error.html').read_text()
             # Generating the response message
             self.send_response(404)
 
