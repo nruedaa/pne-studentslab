@@ -12,7 +12,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
         url_path = urlparse(self.path)
         path = url_path.path
         arguments = parse_qs(url_path.query)
-        termcolor.cprint(self.requestline, 'blue')
+        termcolor.cprint(self.requestline, 'green')
         if path == "/" or path.startswith("/echo"):
             contents = Path('./html/index.html').read_text()
             self.send_response(200)
