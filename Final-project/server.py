@@ -6,7 +6,7 @@ from urllib.parse import parse_qs, urlparse
 import jinja2 as j
 import http.client
 import json
-PORT = 8080
+PORT = 8081
 socketserver.TCPServer.allow_reuse_address = True
 def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
