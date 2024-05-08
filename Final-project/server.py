@@ -41,12 +41,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             names = []
             for i in species_list:
                 names.append(i["display_name"])
-            species = ""
-            for n in range(len(names)):
-                if n < limit:
-                    species += "·" + names[n] + "\n"
             contents = read_html_file("species.html").render(
-                context={"length": length, "limit": limit, "species": species})
+                context={"length": length, "limit": limit, "species": names})
             self.send_response(200)
         elif path == "/karyotype":
             species_input = arguments.get("species", [""])[0]
@@ -64,14 +60,33 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
             data1 = r1.read().decode("utf-8")
             response = json.loads(data1)
             karyotipe_list = response["karyotype"]
-            chromosomes = ""
-            for k in karyotipe_list:
-                chromosomes += k
             contents = read_html_file("karyotype.html").render(
-                context={"chromosomes": chromosomes})
+                context={"chromosomes": karyotipe_list})
             self.send_response(200)
         elif path == "/chromosomeLength":
-            pass
+            species_input = arguments.get("species", [""])[0]
+            chromosome_input = arguments.get("chromosome", [""])[0]
+            SERVER = "rest.ensembl.org"
+            ENDPOINT = f"/info/assembly/{species_input}"
+            PARAMS = "?content-type=application/json"
+            conn = http.client.HTTPConnection(SERVER)
+            try:
+                conn.request("GET", ENDPOINT + PARAMS)
+            except ConnectionRefusedError:
+                print("ERROR! Cannot connect to the Server")
+                exit()
+            r1 = conn.getresponse()
+            print(f"Response received!: {r1.status} {r1.reason}\n")
+            data1 = r1.read().decode("utf-8")
+            response = json.loads(data1)
+            for t in response["top_level_region"]:
+                if t["coord_system"] == "chromosome":
+                    if t["name"] == chromosome_input:
+                        chromosome_length = t["length"]
+                        print(chromosome_length)
+                        contents = read_html_file("chromosome_length.html").render(
+                            context={"chromosome_length": chromosome_length})
+            self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
             # Generating the response message

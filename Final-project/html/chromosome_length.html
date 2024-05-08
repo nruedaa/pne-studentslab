@@ -2,13 +2,10 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>karyotype</title>
+    <title>species</title>
   </head>
   <body style="background-color: lightblue;">
-    <p>The names of the chromosomes are:</p>
-    <ul>{% for e in context.chromosomes %}
-    <li> {{e}}</li>
-    {% endfor %}</ul>
+    <p>The length of the chromosome is:{{context.chromosome_length}}</p>
     <a href="/">Index</a>
   </body>
 </html>
