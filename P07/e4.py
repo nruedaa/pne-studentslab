@@ -27,7 +27,6 @@ if gene_name in genes_list:
     print(f"URL:{URL}")
 
     conn = http.client.HTTPConnection(SERVER)
-
     try:
         conn.request("GET", ENDPOINT + GENE_ID + PARAMS)
     except ConnectionRefusedError:
