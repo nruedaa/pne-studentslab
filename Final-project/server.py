@@ -12,6 +12,23 @@ def read_html_file(filename):
     contents = Path("html/" + filename).read_text()
     contents = j.Template(contents)
     return contents
+
+def get_gene_id(gene):
+    SERVER = "rest.ensembl.org"
+    PATH = f"/lookup/symbol/human/{gene}?content-type=application/json"
+    conn = http.client.HTTPConnection(SERVER)
+    try:
+        conn.request("GET", PATH)
+
+    except ConnectionRefusedError:
+        print("ERROR! Cannot connect to the Server")
+        exit()
+    r1 = conn.getresponse()
+    data1 = r1.read().decode("utf-8")
+    response = json.loads(data1)
+    gene_id = response["id"]
+    return gene_id
+
 class TestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         url_path = urlparse(self.path)
@@ -87,6 +104,33 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                         contents = read_html_file("chromosome_length.html").render(
                             context={"chromosome_length": chromosome_length})
             self.send_response(200)
+        elif path == "/geneSeq":
+            gene_name = (arguments.get("gene", [""])[0]).upper()
+            SERVER = "rest.ensembl.org"
+            ENDPOINT = "/sequence/id/"
+            id = get_gene_id(gene_name)
+            PARAMS = "?content-type=application/json"
+            conn = http.client.HTTPConnection(SERVER)
+            if id:
+                try:
+                    conn.request("GET", ENDPOINT + id + PARAMS)
+                except ConnectionRefusedError:
+                    print("ERROR! Cannot connect to the Server")
+                    exit()
+
+                r1 = conn.getresponse()
+                print(f"Response received!: {r1.status} {r1.reason}\n")
+
+                data1 = r1.read().decode("utf-8")
+                response = json.loads(data1)
+                seq = response["seq"]
+                contents = read_html_file("sequence.html").render(
+                    context={"sequence": seq, "gene": gene_name})
+                self.send_response(200)
+            else:
+                contents = Path('./html/error.html').read_text()
+                # Generating the response message
+                self.send_response(404)
         else:
             contents = Path('./html/error.html').read_text()
             # Generating the response message
