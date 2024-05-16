@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>index</title>
+    <title>INDEX</title>
   </head>
   <body style="background-color: lightyellow;">
     <h1>Browsing Human and Vertebrates genome</h1>
@@ -36,10 +36,28 @@
           <input type="submit" value="Send">
       </form>
       <p>5) Obtain gene information:</p>
-          <form action="geneInfo" method="get">
-            Select gene:  <input type="text" name="gene">
-            <br><br>
-              <input type="submit" value="Send">
-          </form>
+      <form action="geneInfo" method="get">
+        Select gene:  <input type="text" name="gene">
+        <br><br>
+          <input type="submit" value="Send">
+      </form>
+      <p>6) Obtain bases frequency:</p>
+      <form action="geneCalc" method="get">
+        Select gene:  <input type="text" name="gene">
+        <br><br>
+          <input type="submit" value="Send">
+      </form>
+      <p>7) Obtain list of genes in a chromosome:</p>
+      <form action="geneList" method="get">
+        Select the species:  <input type="text" name="species">
+        <br><br>
+        Select chromosome:  <input type="text" name="chromo">
+        <br><br>
+        Select start point:  <input type="text" name="start">
+        <br><br>
+        Select end point:  <input type="text" name="end">
+        <br><br>
+          <input type="submit" value="Send">
+      </form>
   </body>
 </html>

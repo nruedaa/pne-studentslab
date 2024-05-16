@@ -2,12 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>SEQUENCE</title>
+    <title>INFORMATION</title>
   </head>
   <body style="background-color: lightpink;">
     <p>The gene you have selected is: {{context.gene}}</p>
-    <p>The sequence of the gene is:</p>
-    <textarea rows="15" cols ="60">{{context.sequence}}</textarea>
+    <p>The gene ID is: {{context.gene_id}}</p>
+    <p>Start point: {{context.start}}</p>
+    <p>End point: {{context.end}}</p>
+    <p>Chromosome: {{context.chromosome}}</p>
+    <p>Length: {{context.gene_length}}</p>
     <br><br>
     <a href="/">Index</a>
   </body>
