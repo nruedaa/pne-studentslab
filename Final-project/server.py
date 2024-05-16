@@ -131,6 +131,8 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 contents = Path('./html/error.html').read_text()
                 # Generating the response message
                 self.send_response(404)
+        elif path == "/geneInfo":
+            pass
         else:
             contents = Path('./html/error.html').read_text()
             # Generating the response message
