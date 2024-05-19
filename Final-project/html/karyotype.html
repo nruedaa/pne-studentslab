@@ -5,6 +5,9 @@
     <title>KARYOTYPE</title>
   </head>
   <body style="background-color: lightblue;">
+  <h2>Information provided by user:</h2>
+      <p>The species you have selected is: {{context.specie_name}}</p>
+  <h2>KARYOTYPE</h2>
     <p>The names of the chromosomes are:</p>
     <ul>{% for e in context.chromosomes %}
     <li> {{e}}</li>
