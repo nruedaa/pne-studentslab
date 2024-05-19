@@ -8,7 +8,8 @@
     <p>The total number of species in the Ensembl is: {{context.length}}</p>
     <p>The limit you have selected is: {{context.limit}}</p>
     <p>The names of the species are:</p>
-    <ul>{% for e in context.species[:context.limit] %}
+    <ul>
+      {% for e in context.species[:context.limit] %}
     <li> {{e}}</li>
     {% endfor %}</ul>
     <a href="/">Index</a>
