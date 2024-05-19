@@ -87,7 +87,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 self.send_response(404)
         elif path == "/chromosomeLength":
             species_input = arguments.get("species", [""])[0]
-            chromosome_input = arguments.get("chromosome", [""])[0]
+            chromosome_input = arguments.get("chromo", [""])[0]
             if species_input and chromosome_input:
                 SERVER = "rest.ensembl.org"
                 ENDPOINT = f"/info/assembly/{species_input}"
@@ -192,12 +192,11 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                 # Generating the response message
                 self.send_response(404)
         elif path == "/geneList":
-            species_name = (arguments.get("species", [""])[0]).upper()
             chromosome_name = (arguments.get("chromo", [""])[0]).upper()
             start_point = (arguments.get("start", [""])[0])
             end_point = (arguments.get("end", [""])[0])
             SERVER = "rest.ensembl.org"
-            ENDPOINT = f"/overlap/region/{species_name}/{chromosome_name}:{start_point}-{end_point}"
+            ENDPOINT = f"/overlap/region/human/{chromosome_name}:{start_point}-{end_point}"
             PARAMS = "?feature=gene&content-type=application/json"
             conn = http.client.HTTPConnection(SERVER)
             try:
@@ -232,7 +231,7 @@ class TestHandler(http.server.BaseHTTPRequestHandler):
                     if response2["description"]:
                         gene_name_list.append(response2["description"])
             contents = read_html_file("genes_list.html").render(
-                context={"species": species_name, "chromosome_name": chromosome_name, "start": start_point, "end":end_point, "list_genes": gene_name_list})
+                context={"chromosome_name": chromosome_name, "start": start_point, "end":end_point, "list_genes": gene_name_list})
             self.send_response(200)
         else:
             contents = Path('./html/error.html').read_text()
